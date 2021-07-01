@@ -47,7 +47,7 @@ _atecc508_config = bytearray.fromhex(
 
 # Example configuration for ATECC608A minus the first 16 bytes which are fixed by the factory
 _atecc608_config = bytearray.fromhex(
-    '6A 00 00 01 85 00 82 00  85 20 85 20 85 20 C6 46'
+    'C0 00 00 01 85 00 82 00  85 20 85 20 85 20 C6 46'
     '8F 0F 9F 8F 0F 0F 8F 0F  0F 0F 0F 0F 0F 0F 0F 0F'
     '0D 1F 0F 0F FF FF FF FF  00 00 00 00 FF FF FF FF'
     '00 00 00 00 00 00 03 F7  00 69 76 00 00 00 00 00'
@@ -57,7 +57,7 @@ _atecc608_config = bytearray.fromhex(
 
 _configs = {'ATSHA204A': _atsha204_config,
             'ATECC508A': _atecc508_config,
-            'ATECC608A': _atecc608_config }
+            'ATECC608': _atecc608_config }
 
 # Safe input if using python 2
 try: input = raw_input
@@ -197,7 +197,7 @@ def key_gen(dev_name):
     assert ATCA_SUCCESS == atcab_read_config_zone(config_data)
     if dev_name == 'ATECC508A':
         config = Atecc508aConfig.from_buffer(config_data)
-    elif dev_name == 'ATECC608A':
+    elif dev_name == 'ATECC608':
         config = Atecc608Config.from_buffer(config_data)
     else:
         raise ValueError('Unsupported device {}'.format(dev_name))
