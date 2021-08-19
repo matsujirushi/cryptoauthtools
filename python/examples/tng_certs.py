@@ -53,7 +53,8 @@ def init_device(iface='hid', **kwargs):
 
     # Basic Raspberry Pi I2C check
     if 'i2c' == iface and check_if_rpi():
-        cfg.cfg.atcai2c.bus = 1
+        cfg.cfg.atcai2c.bus = 3
+        cfg.cfg.atcai2c.slave_address = 0x6a
 
     # Initialize the stack
     assert atcab_init(cfg) == ATCA_SUCCESS
@@ -202,6 +203,7 @@ def tng_certs():
 
     device_cert_der = bytearray(device_cert_der_size.value)
     assert tng_atcacert_read_device_cert(device_cert_der, device_cert_der_size) == ATCA_SUCCESS
+    #rc = tng_atcacert_read_device_cert(device_cert_der, device_cert_der_size)
 
     device_cert = x509.load_der_x509_certificate(device_cert_der, default_backend())
     certs.insert(0, device_cert)
